@@ -1,5 +1,6 @@
 package com.leo.rickandmorty.home.presentation.viewModel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,8 +13,10 @@ class HomeViewModel(
     private val homeUseCase: HomeUseCase
 ) : ViewModel() {
 
-    val characterList = MutableLiveData<List<ResultsToUi>>()
-    val loading = MutableLiveData<Boolean>()
+    private val _characterList = MutableLiveData<List<ResultsToUi>>()
+    val characterList = this._characterList as LiveData<List<ResultsToUi>>
+    private val _loading = MutableLiveData<Boolean>()
+    val loading = _loading as LiveData<Boolean>
 
     init {
         getCharacters()
@@ -22,10 +25,10 @@ class HomeViewModel(
     private fun getCharacters() {
         viewModelScope.launch {
             homeUseCase.invoke().let {
-                characterList.postValue(homeUseCase.invoke().map {
+                this@HomeViewModel._characterList.postValue(homeUseCase.invoke().map {
                     it.resultToPresentation()
                 })
-                loading.postValue(false)
+                _loading.postValue(false)
             }
         }
     }
