@@ -25,7 +25,7 @@ class HomeViewModel(
     private fun getCharacters() {
         viewModelScope.launch {
             homeUseCase.invoke().let {
-                this@HomeViewModel._characterList.postValue(homeUseCase.invoke().map {
+                _characterList.postValue(homeUseCase.invoke().map {
                     it.resultToPresentation()
                 })
                 _loading.postValue(false)
