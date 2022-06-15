@@ -7,10 +7,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.junit.MockitoJUnitRunner
 
-@RunWith(MockitoJUnitRunner::class)
 class HomeUseCaseTest {
 
     private val repository = mockk<HomeRepository>()
